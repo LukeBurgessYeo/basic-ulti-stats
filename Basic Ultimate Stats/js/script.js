@@ -61,8 +61,8 @@ $(function() {
                 team2Class = "hold";
                 if (team2Turns === 0) { team2Class += " perfect"; }
             }
+
             team1Class = team1Offense ? "broken" : "conceded";
-            //team2Class = team1Offense ? "break" : "hold";
 
             team2Goals += 1;
             team1Offense = true;
@@ -78,12 +78,30 @@ $(function() {
         $("#data").html(tableData.join(""));
 
         team1HasDisc = !team1HasDisc;
-        ressetTurnovers();
+        resetTurnovers();
 
         inputs.push("score");
     });
 
-    function ressetTurnovers() {
+    $("#halftime").click(function() {
+        team1Offense = !team1Offense;
+        team1HasDisc = !team1HasDisc;
+
+        var team1Possession = team1Offense ? "Offense" : "Defense";
+        var team2Possession = team1Offense ? "Defense" : "Offense";
+
+        $("#team1mode").html(team1Possession);
+        $("#team2mode").html(team2Possession);
+
+        tableData.push("<tr><td colspan='5' class='half'>HALF</td></tr>");
+        $("#data").html(tableData.join(""));
+
+        $("#halftime").attr("disabled", true);
+
+        inputs.push("half");
+    });
+
+    function resetTurnovers() {
         team1Turns = 0;
         team2Turns = 0;
         $("#turnover").html("Turnovers");
