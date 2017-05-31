@@ -25,3 +25,23 @@ body {
 th {
     text-align: center;
 }
+
+.hold {
+  background-color: #5cb85c;
+}
+
+.break {
+  background-color: #0be00b;
+}
+
+.conceded {
+  background-color: #d9534f;
+}
+
+.broken {
+  background-color: #e00b0b;
+}
+
+.perfect {
+  font-weight: bolder;
+}

@@ -1,5 +1,6 @@
 $(function() {
     var firstHalf = true;
+    var team1Offense = true;
     var team1HasDisc = true;
     var team1Turns = 0;
     var team2Turns = 0;
@@ -31,29 +32,55 @@ $(function() {
     });
 
     $("#score").click(function() {
-        var team1Possession = team1HasDisc ? "O" : "D";
-        var team2Possession = team1HasDisc ? "D" : "O";
+        var team1Possession = team1Offense ? "O" : "D";
+        var team2Possession = team1Offense ? "D" : "O";
+        var team1Class = "";
+        var team2Class = "";
 
         if (team1HasDisc) {
+            if (team1Offense) {
+                team1Class = "hold";
+                if (team1Turns === 0) { team1Class += " perfect"; }
+            } else {
+                team1Class = "break";
+                if (team1Turns === 0) { team1Class += " perfect"; }
+            }
+
+            team2Class = team1Offense ? "conceded" : "broken";
+
             team1Goals += 1;
+            team1Offense = false;
             $("#team1score").html(team1Goals);
             $("#team1mode").html("Defense");
             $("#team2mode").html("Offense");
         } else {
+            if (team1Offense) {
+                team2Class = "break";
+                if (team2Turns === 0) { team2Class += " perfect"; }
+            } else {
+                team2Class = "hold";
+                if (team2Turns === 0) { team2Class += " perfect"; }
+            }
+            team1Class = team1Offense ? "broken" : "conceded";
+            //team2Class = team1Offense ? "break" : "hold";
+
             team2Goals += 1;
+            team1Offense = true;
             $("#team2score").html(team2Goals);
             $("#team1mode").html("Offense");
             $("#team2mode").html("Defense");
         }
 
-        var newRow = "<tr><td>" + team1Turns + "</td><td>" + team1Possession + "</td><td>" + team1Goals + "-" + team2Goals + "</td><td>" + team2Possession + "</td><td>" + team2Turns + "</td></tr>";
+        var newRow = "<tr><td class='" + team1Class + "'>" + team1Turns + "</td><td class='" + team1Class + "'>" + team1Possession + "</td><td>" + team1Goals + "-" + team2Goals + "</td><td class='" + team2Class + "'>" + team2Possession + "</td><td class='" + team2Class + "'>" + team2Turns + "</td></tr>";
 
         tableData.push(newRow);
 
         $("#data").html(tableData.join(""));
 
-        ressetTurnovers();
         team1HasDisc = !team1HasDisc;
+        ressetTurnovers();
+
+        inputs.push("score");
     });
 
     function ressetTurnovers() {
