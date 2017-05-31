@@ -84,8 +84,8 @@ $(function() {
     });
 
     $("#halftime").click(function() {
-        team1Offense = !team1Offense;
-        team1HasDisc = !team1HasDisc;
+        team1Offense = false;
+        team1HasDisc = false;
 
         var team1Possession = team1Offense ? "Offense" : "Defense";
         var team2Possession = team1Offense ? "Defense" : "Offense";
