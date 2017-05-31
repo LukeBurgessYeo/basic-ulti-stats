@@ -1,5 +1,4 @@
 $(function() {
-    var firstHalf = true;
     var team1Offense = true;
     var team1HasDisc = true;
     var team1Turns = 0;
@@ -91,7 +90,6 @@ $(function() {
             } else {
                 team1Class = "break";
                 team1Results.GoalsScored[1] += 1;
-                team1Results.Breaks[1] += 1;
                 if (team1Turns === 0) {
                     team1Class += " perfect";
                     team1Results.NoTurnGoals[1] += 1;
@@ -109,7 +107,6 @@ $(function() {
             if (team1Offense) {
                 team2Class = "break";
                 team2Results.GoalsScored[1] += 1;
-                team1Results.Breaks[0] -= 1;
                 if (team2Turns === 0) {
                     team2Class += " perfect";
                     team2Results.NoTurnGoals[1] += 1;
@@ -158,6 +155,10 @@ $(function() {
 
         inputs.push("half");
     });
+
+    $("#undo").click(function() {
+        console.log("undo");
+    })
 
     function resetTurnovers() {
         team1Turns = 0;
@@ -239,8 +240,10 @@ $(function() {
         team1Results.Blocks[0] = team2Results.Turnovers[1];
         team1Results.Blocks[1] = team2Results.Turnovers[0];
         team2Results.Blocks[0] = team1Results.Turnovers[1];
-        team2Results.Blocks[1] = team2Results.Turnovers[0];
+        team2Results.Blocks[1] = team1Results.Turnovers[0];
 
+        team1Results.Breaks[0] = team1Results.GoalsScored[0] - team1Results.PointsPlayed[0];
+        team1Results.Breaks[1] = team1Results.GoalsScored[1];
         team2Results.Breaks[0] = -1 * team1Results.Breaks[1];
         team2Results.Breaks[1] = -1 * team1Results.Breaks[0];
 
