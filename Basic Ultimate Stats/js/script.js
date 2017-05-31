@@ -24,9 +24,9 @@ $(function() {
             team2Turns += 1;
         }
 
-        team1HasDisc = !team1HasDisc;
-
         $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
+
+        team1HasDisc = !team1HasDisc;
 
         inputs.push("turnover");
     });
@@ -87,11 +87,8 @@ $(function() {
         team1Offense = false;
         team1HasDisc = false;
 
-        var team1Possession = team1Offense ? "Offense" : "Defense";
-        var team2Possession = team1Offense ? "Defense" : "Offense";
-
-        $("#team1mode").html(team1Possession);
-        $("#team2mode").html(team2Possession);
+        $("#team1mode").html("Defense");
+        $("#team2mode").html("Offense");
 
         tableData.push("<tr><td colspan='5' class='half'>HALF</td></tr>");
         $("#data").html(tableData.join(""));
