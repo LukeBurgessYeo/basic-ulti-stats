@@ -54,6 +54,7 @@ $(function() {
         team1HasDisc = !team1HasDisc;
 
         inputs.push("turnover");
+        $("#halftime").attr("disabled", true);
         $("#undo").attr("disabled", false);
     });
 
@@ -89,7 +90,7 @@ $(function() {
                 team2Class = "broken";
                 (team1Turns === 0) ? team1Class += " perfect" : team1Class += "";
             }
-            
+
             team1Offense = false;
         } else {
             team1scored = false;
@@ -126,13 +127,12 @@ $(function() {
         team1HasDisc = !team1HasDisc;
         resetTurnovers();
 
-        if (firstHalf) {
-            $("#halftime").attr("disabled", false);
-        }
+        firstHalf ? $("#halftime").attr("disabled", false) : $("#halftime").attr("disabled", true);
 
         updateTable();
         inputs.push("score");
         $("#undo").attr("disabled", false);
+        console.log(firstHalf);
     });
 
     $("#halftime").click(function() {
@@ -150,6 +150,7 @@ $(function() {
 
         inputs.push("half");
         $("#undo").attr("disabled", false);
+        console.log(firstHalf);
     });
 
     $("#undo").click(function() {
@@ -166,11 +167,11 @@ $(function() {
         }
 
         updateTable();
-
         inputs.pop();
         if (inputs.length === 0) {
             $("#undo").attr("disabled", true);
         }
+        console.log(firstHalf);
     });
 
     function resetTurnovers() {
@@ -188,25 +189,29 @@ $(function() {
     function undoScore() {
         team1HasDisc = !team1HasDisc;
 
-        team1ScoredLast[team1ScoredLast.length - 1] ? (team1Goals -= 1) : (team2Goals -= 1);
+        scoretable[scoretable.length - 1].Team1Scored ? (team1Goals -= 1) : (team2Goals -= 1);
         $("#team1score").html(team1Goals);
         $("#team2score").html(team2Goals);
 
-        if (scoretable.length > 2) {
-            var team1mode = (scoretable[scoretable.length - 2].Team1Side == "O") ? "Offense" : "Defense";
-            var team2mode = (scoretable[scoretable.length - 2].Team2Side == "O") ? "Offense" : "Defense";
-            $("#team1mode").html(team1mode);
-            $("#team2mode").html(team2mode);
-            team1Offense = team1ScoredLast[team1ScoredLast.length - 1];
+        team1Turns = scoretable[scoretable.length - 1].Team1Turns;
+        team2Turns = scoretable[scoretable.length - 1].Team2Turns;
+        $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
+
+        if (scoretable.length > 1) {
+            if (scoretable[scoretable.length - 1].Team1Side == "O") {
+                team1Offense = true;
+                $("#team1mode").html("Offense");
+                $("#team2mode").html("Defense");
+            } else {
+                team1Offense = false;
+                $("#team1mode").html("Defense");
+                $("#team2mode").html("Offense");
+            }
         } else {
             $("#team1mode").html("Offense");
             $("#team2mode").html("Defense");
             team1Offense = true;
         }
-
-        team1Turns = scoretable[scoretable.length - 1].Team1Turns;
-        team2Turns = scoretable[scoretable.length - 1].Team2Turns;
-        $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
 
         team1ScoredLast.pop();
         scoretable.pop();
@@ -218,9 +223,9 @@ $(function() {
     }
 
     function undoHalf() {
-        firsthalf = true;
+        firstHalf = true;
 
-        if (team1ScoredLast) {
+        if (scoretable[scoretable.length - 1].Team1Scored) {
             team1Offense = false;
             team1HasDisc = false;
             $("#team1mode").html("Defense");

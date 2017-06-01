@@ -5,13 +5,23 @@ body {
 }
 
 @media screen and (max-width: 359px) {
-    .smaller div {
-        max-width: 40%;
+    .smaller {
+        max-width: 150px;
     }
 }
 
 .navbar {
   border-radius: 0px;
+}
+
+.noborder {
+    border-color: black !important;
+}
+
+#scoreboard {
+    min-width: 70px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #team1score,
@@ -29,6 +39,10 @@ body {
     border-style: solid;
     border-color: white;
     border-width: 1px;
+}
+
+.notop {
+    border-top-color: black !important;
 }
 
 th {
