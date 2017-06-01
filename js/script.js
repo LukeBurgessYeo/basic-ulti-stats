@@ -405,17 +405,17 @@ $(function() {
             team2Results.MeanTurnsPerPoint[1] = Math.round(100 * team2Results.Turnovers[1] / team2Results.HadDiscPoints[1]) / 100;
         }
 
-        if (team1Results.GoalsWithTurns[0] - team1Results.Breaks[0] > 0) {
-            team1Results.RecoveryRate[0] = Math.round(100 * team1Results.GoalsWithTurns[0] / (team1Results.GoalsWithTurns[0] - team1Results.Breaks[0]));
+        if (team1Results.HadDiscPoints[0] - team1Results.NoTurnGoals[0] > 0) {
+            team1Results.RecoveryRate[0] = Math.round(100 * team1Results.GoalsWithTurns[0] / (team1Results.HadDiscPoints[0] - team1Results.NoTurnGoals[0]));
         }
-        if (team1Results.PointsPlayed[1] - team1Results.NoTurnGoals[1] > 0) {
-            team1Results.RecoveryRate[1] = Math.round(100 * team1Results.GoalsWithTurns[1] / (team1Results.PointsPlayed[1] - team1Results.NoTurnGoals[1]));
+        if (team1Results.HadDiscPoints[1] - team1Results.NoTurnGoals[1] > 0) {
+            team1Results.RecoveryRate[1] = Math.round(100 * team1Results.GoalsWithTurns[1] / (team1Results.HadDiscPoints[1] - team1Results.NoTurnGoals[1]));
         }
-        if (team2Results.GoalsWithTurns[0] - team2Results.Breaks[0] > 0) {
-            team2Results.RecoveryRate[0] = Math.round(100 * team2Results.GoalsWithTurns[0] / (team2Results.GoalsWithTurns[0] - team2Results.Breaks[0]));
+        if (team2Results.HadDiscPoints[0] - team2Results.NoTurnGoals[0] > 0) {
+            team2Results.RecoveryRate[0] = Math.round(100 * team2Results.GoalsWithTurns[0] / (team2Results.HadDiscPoints[0] - team2Results.NoTurnGoals[0]));
         }
-        if (team2Results.PointsPlayed[1] - team2Results.NoTurnGoals[1] > 0) {
-            team2Results.RecoveryRate[1] = Math.round(100 * team2Results.GoalsWithTurns[1] / (team2Results.PointsPlayed[1] - team2Results.NoTurnGoals[1]));
+        if (team2Results.HadDiscPoints[1] - team2Results.NoTurnGoals[1] > 0) {
+            team2Results.RecoveryRate[1] = Math.round(100 * team2Results.GoalsWithTurns[1] / (team2Results.HadDiscPoints[1] - team2Results.NoTurnGoals[1]));
         }
 
         if (team1Results.PointsPlayed[1] > 0) {
