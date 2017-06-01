@@ -10,6 +10,15 @@ body {
     }
 }
 
+.navbar {
+  border-radius: 0px;
+}
+
+#team1score,
+#team2score {
+  font-size: 22px;
+}
+
 .btn {
     width: 200px;
     margin: 5px 0px 5px 0px;

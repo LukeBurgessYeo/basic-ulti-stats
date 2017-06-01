@@ -1,12 +1,24 @@
 $(function() {
+    var firstHalf = true;
     var team1Offense = true;
     var team1HasDisc = true;
+    var team1ScoredLast = [];
     var team1Turns = 0;
     var team2Turns = 0;
     var team1Goals = 0;
     var team2Goals = 0;
     var tableData = ["<table id='data' class='table table-bordered table-condensed'><tr><th>Turns</th><th>O/D</th><th>Score</th><th>O/D</th><th>Turns</th></tr></table>"];
     var inputs = [];
+    var scoretable = [];
+
+    function ScoreEntry(_Team1Turns, _Team1Side, _Team1Score, _Team2Turns, _Team2Side, _Team2Score) {
+        this.Team1Turns = _Team1Turns;
+        this.Team1Side = _Team1Side;
+        this.Team1Score = _Team1Score;
+        this.Team2Turns = _Team2Turns;
+        this.Team2Side = _Team2Side;
+        this.Team2Score = _Team2Score;
+    }
 
     function Results() {
         this.PointsPlayed = [0, 0];
@@ -36,42 +48,37 @@ $(function() {
     });
 
     $("#turnover").click(function() {
-        if (team1HasDisc) {
-            team1Turns += 1;
-        } else {
-            team2Turns += 1;
-        }
-
+        team1HasDisc ? (team1Turns += 1) : (team2Turns += 1);
         $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
-
         team1HasDisc = !team1HasDisc;
 
         inputs.push("turnover");
+        $("#undo").attr("disabled", false);
     });
 
     $("#score").click(function() {
-        var team1Possession;
-        var team2Possession;
+        var team1Side;
+        var team2Side;
         var team1Class = "";
         var team2Class = "";
 
         if (team1Offense) {
-            team1Possession = "O";
+            team1Side = "O";
             team1Results.PointsPlayed[0] += 1;
             team1Results.Turnovers[0] += team1Turns;
 
-            team2Possession = "D";
+            team2Side = "D";
             team2Results.Turnovers[1] += team2Turns;
 
             if (team1Turns > 0) {
                 team2Results.HadDiscPoints[1] += 1;
             }
         } else {
-            team1Possession = "D";
+            team1Side = "D";
             team1Results.PointsPlayed[1] += 1;
             team1Results.Turnovers[1] += team1Turns;
 
-            team2Possession = "O";
+            team2Side = "O";
             team2Results.Turnovers[0] += team2Turns;
 
             if (team2Turns > 0) {
@@ -103,6 +110,7 @@ $(function() {
             $("#team1score").html(team1Goals);
             $("#team1mode").html("Defense");
             $("#team2mode").html("Offense");
+            team1ScoredLast.push(true);
         } else {
             if (team1Offense) {
                 team2Class = "break";
@@ -127,21 +135,30 @@ $(function() {
             $("#team2score").html(team2Goals);
             $("#team1mode").html("Offense");
             $("#team2mode").html("Defense");
+            team1ScoredLast.push(false);
         }
 
-        var newRow = "<tr><td class='" + team1Class + "'>" + team1Turns + "</td><td class='" + team1Class + "'>" + team1Possession + "</td><td>" + team1Goals + "-" + team2Goals + "</td><td class='" + team2Class + "'>" + team2Possession + "</td><td class='" + team2Class + "'>" + team2Turns + "</td></tr>";
+        var entry = new ScoreEntry(team1Turns, team1Side, team1Goals, team2Turns, team2Goals, team2Goals);
+        scoretable.push(entry);
 
+        var newRow = "<tr><td class='" + team1Class + "'>" + entry.Team1Turns + "</td><td class='" + team1Class + "'>" + entry.Team1Side + "</td><td>" + entry.Team1Score + "-" + entry.Team2Score + "</td><td class='" + team2Class + "'>" + entry.Team2Side + "</td><td class='" + team2Class + "'>" + entry.Team2Turns + "</td></tr>";
         tableData.push(newRow);
         $("#data").html(tableData.join(""));
 
         team1HasDisc = !team1HasDisc;
         resetTurnovers();
 
+        if (firstHalf) {
+            $("#halftime").attr("disabled", false);
+        }
+
         updateTable();
         inputs.push("score");
+        $("#undo").attr("disabled", false);
     });
 
     $("#halftime").click(function() {
+        firstHalf = false;
         team1Offense = false;
         team1HasDisc = false;
 
@@ -154,16 +171,90 @@ $(function() {
         $("#halftime").attr("disabled", true);
 
         inputs.push("half");
+        $("#undo").attr("disabled", false);
     });
 
     $("#undo").click(function() {
-        console.log("undo");
-    })
+        switch (inputs[inputs.length - 1]) {
+            case "turnover":
+                undoTurnover();
+                break;
+            case "score":
+                undoScore();
+                break;
+            case "half":
+                undoHalf();
+                break;
+        }
+
+        inputs.pop();
+        if (inputs.length === 0) {
+            $("#undo").attr("disabled", true);
+        }
+    });
 
     function resetTurnovers() {
         team1Turns = 0;
         team2Turns = 0;
-        $("#turnover").html("Turnovers");
+        $("#turnover").html("Turnover");
+    }
+
+    function undoTurnover() {
+        team1HasDisc ? (team2Turns -= 1) : (team1Turns -= 1);
+        team1HasDisc = !team1HasDisc;
+        $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
+    }
+
+    function undoScore() {
+        team1HasDisc = !team1HasDisc;
+
+        team1ScoredLast[team1ScoredLast.length - 1] ? (team1Goals -= 1) : (team2Goals -= 1);
+        $("#team1score").html(team1Goals);
+        $("#team2score").html(team2Goals);
+
+        if (scoretable.length > 2) {
+            var team1mode = (scoretable[scoretable.length - 2].Team1Side == "O") ? "Offense" : "Defense";
+            var team2mode = (scoretable[scoretable.length - 2].Team2Side == "O") ? "Offense" : "Defense";
+            $("#team1mode").html(team1mode);
+            $("#team2mode").html(team2mode);
+            team1Offense = team1ScoredLast[team1ScoredLast.length - 1];
+        } else {
+            $("#team1mode").html("Offense");
+            $("#team2mode").html("Defense");
+            team1Offense = true;
+        }
+
+        team1Turns = scoretable[scoretable.length - 1].Team1Turns;
+        team2Turns = scoretable[scoretable.length - 1].Team2Turns;
+        $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
+
+        team1ScoredLast.pop();
+        scoretable.pop();
+        tableData.pop();
+        $("#data").html(tableData.join(""));
+        if (tableData.length == 1) {
+            $("#halftime").attr("disabled", true);
+        }
+    }
+
+    function undoHalf() {
+        firsthalf = true;
+
+        if (team1ScoredLast) {
+            team1Offense = false;
+            team1HasDisc = false;
+            $("#team1mode").html("Defense");
+            $("#team2mode").html("Offense");
+        } else {
+            team1Offense = true;
+            team1HasDisc = true;
+            $("#team1mode").html("Offense");
+            $("#team2mode").html("Defense");
+        }
+
+        tableData.pop();
+        $("#data").html(tableData.join(""));
+        $("#halftime").attr("disabled", false);
     }
 
     function updateTable() {
