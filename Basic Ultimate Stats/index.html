@@ -25,19 +25,25 @@
     </nav>
     <h1 class="text-primary text-center" contentEditable>Click Title And Team Names To Edit</h1>
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-5 text-right offense">
+                <h5 id="team1mode">Offense</h5></div>
+            <div class="col-xs-2 text-center">
+                <h5>Score</h5></div>
+            <div class="col-xs-5 text-left defense">
+                <h5 id="team2mode">Defense</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5 text-right offense">
+                <h4 id="team1name" contentEditable>Offense Team Name</h4></div>
+            <div class="col-xs-1 text-center">
+                <h4 id="team1score">0</h4></div>
+            <div class="col-xs-1 text-center">
+                <h4 id="team2score">0</h4></div>
+            <div class="col-xs-5 text-left defense">
+                <h4 id="team2name" contentEditable>Defense Team Name</h4></div>
+      </div>
         <br>
-        <table class="table table-condensed">
-            <tr class="noborder">
-                <td class="text-right smaller"><h5 id="team1mode">Offense</h5></td>
-                <td class="text-center"><h5>Score</h5></td>
-                <td class="text-left"><h5 id="team2mode">Defense</h5></td>
-            </tr>
-            <tr>
-                <td class="text-right smaller"><h4 id="team1name" contentEditable>Offense Team Name</h4></td>
-                <td class="text-center" style="white-space: nowrap"><h4><span id="team1score">0</span> - <span id="team2score">0</span></h4></td>
-                <td class="text-left"><h4 id="team2name" contentEditable>Defense Team Name</h4></td>
-            </tr>
-        </table>
         <div class="row">
             <div class="col-xs-12 col-md-3 text-center"><button class="btn btn-lg btn-danger" id="turnover">Turnover</button></div>
             <div class="col-xs-12 col-md-3 text-center"><button class="btn btn-lg btn-success" id="score">Score</button></div>

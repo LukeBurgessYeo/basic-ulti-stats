@@ -5,8 +5,16 @@ body {
 }
 
 @media screen and (max-width: 359px) {
-    .smaller {
-        max-width: 150px;
+    .defense {
+        float: right !important;
+        width: 40% !important;
+        text-align: right !important;
+    }
+
+    .offense {
+        float: left !important;
+        width: 40% !important;
+        text-align: left !important;
     }
 }
 
