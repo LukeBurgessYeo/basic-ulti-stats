@@ -7,7 +7,7 @@ $(function() {
     var team2Turns = 0;
     var team1Goals = 0;
     var team2Goals = 0;
-    var tableData = ["<table id='data' class='table table-bordered table-condensed'><tr><th>Turns</th><th>O/D</th><th>Score</th><th>O/D</th><th>Turns</th></tr></table>"];
+    var tableData = ["<table id='data' class='table table-bordered table-condensed'><tr><th colspan='2' class='team1'>Offense Team Name</th><th class='notop'></th><th colspan='2' class='team2'>Defense Team Name</th></tr><tr><th>Turns</th><th>O/D</th><th>Score</th><th>O/D</th><th>Turns</th></tr></table>"];
     var inputs = [];
     var scoretable = [];
 
