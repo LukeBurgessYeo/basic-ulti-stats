@@ -40,16 +40,28 @@ $(function() {
     var team1Results = new Results();
     var team2Results = new Results();
 
+    $("#gameTitle").blur(function() {
+        $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
+    });
+
     $("#team1name").blur(function() {
         $(".team1").html($("#team1name").html());
+        $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
     });
 
     $("#team2name").blur(function() {
         $(".team2").html($("#team2name").html());
+        $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
     });
 
     $("#turnover").click(function() {
-        team1HasDisc ? (team1Turns += 1) : (team2Turns += 1);
+        if (team1HasDisc) {
+            team1Turns += 1;
+            changeTeamColour(false);
+        } else {
+            team2Turns += 1;
+            changeTeamColour(true);
+        }
         $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
         team1HasDisc = !team1HasDisc;
 
@@ -125,6 +137,7 @@ $(function() {
         $("#data").html(tableData.join(""));
 
         team1HasDisc = !team1HasDisc;
+        changeTeamColour(team1HasDisc);
         resetTurnovers();
 
         firstHalf ? $("#halftime").attr("disabled", false) : $("#halftime").attr("disabled", true);
@@ -132,7 +145,6 @@ $(function() {
         updateTable();
         inputs.push("score");
         $("#undo").attr("disabled", false);
-        console.log(firstHalf);
     });
 
     $("#halftime").click(function() {
@@ -142,6 +154,7 @@ $(function() {
 
         $("#team1mode").html("Defense");
         $("#team2mode").html("Offense");
+        changeTeamColour(team1HasDisc);
 
         tableData.push("<tr><td colspan='5' class='half'>HALF</td></tr>");
         $("#data").html(tableData.join(""));
@@ -150,7 +163,6 @@ $(function() {
 
         inputs.push("half");
         $("#undo").attr("disabled", false);
-        console.log(firstHalf);
     });
 
     $("#undo").click(function() {
@@ -166,13 +178,23 @@ $(function() {
                 break;
         }
 
+        changeTeamColour(team1HasDisc);
         updateTable();
         inputs.pop();
         if (inputs.length === 0) {
             $("#undo").attr("disabled", true);
         }
-        console.log(firstHalf);
     });
+
+    function changeTeamColour(team1hasdisc) {
+        if (team1hasdisc) {
+            $("#team1name").css("color", "yellow");
+            $("#team2name").css("color", "white");
+        } else {
+            $("#team1name").css("color", "white");
+            $("#team2name").css("color", "yellow");
+        }
+    }
 
     function resetTurnovers() {
         team1Turns = 0;
