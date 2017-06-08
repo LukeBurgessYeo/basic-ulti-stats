@@ -18,6 +18,15 @@ body {
     }
 }
 
+@media print {
+    #turnover,
+    #score,
+    #halftime,
+    #undo {
+        display: none !important;
+    }
+}
+
 .navbar {
   border-radius: 0px;
 }
