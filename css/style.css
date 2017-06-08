@@ -1,4 +1,4 @@
-html, 
+html,
 body {
     background-color: black;
     color: white;
@@ -15,6 +15,15 @@ body {
         float: left !important;
         width: 40% !important;
         text-align: left !important;
+    }
+}
+
+@media print {
+    #turnover,
+    #score,
+    #halftime,
+    #undo {
+        display: none !important;
     }
 }
 
