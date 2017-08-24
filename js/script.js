@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     var firstHalf = true;
     var team1Offense = true;
     var team1HasDisc = true;
@@ -37,24 +37,30 @@ $(function() {
         this.DefensiveSuccessRate = 0;
     }
 
+    function updateTableHeader(team1, team2) {
+        tableData[0] = "<table id='data' class='table table-bordered table-condensed'><tr><th colspan='2' class='team1'>" + team1 + "</th><th class='notop'></th><th colspan='2' class='team2'>" + team2 + "</th></tr><tr><th>Turns</th><th>O/D</th><th>Score</th><th>O/D</th><th>Turns</th></tr></table>";
+    }
+
     var team1Results = new Results();
     var team2Results = new Results();
 
-    $("#gameTitle").blur(function() {
+    $("#gameTitle").blur(function () {
         $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
     });
 
-    $("#team1name").blur(function() {
+    $("#team1name").blur(function () {
         $(".team1").html($("#team1name").html());
         $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
+        updateTableHeader($("#team1name").html(), $("#team2name").html());
     });
 
-    $("#team2name").blur(function() {
+    $("#team2name").blur(function () {
         $(".team2").html($("#team2name").html());
         $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
+        updateTableHeader($("#team1name").html(), $("#team2name").html());
     });
 
-    $("#turnover").click(function() {
+    $("#turnover").click(function () {
         if (team1HasDisc) {
             team1Turns += 1;
             changeTeamColour(false);
@@ -70,7 +76,7 @@ $(function() {
         $("#undo").attr("disabled", false);
     });
 
-    $("#score").click(function() {
+    $("#score").click(function () {
         var team1scored;
         var team1Side;
         var team2Side;
@@ -147,7 +153,7 @@ $(function() {
         $("#undo").attr("disabled", false);
     });
 
-    $("#halftime").click(function() {
+    $("#halftime").click(function () {
         firstHalf = false;
         team1Offense = false;
         team1HasDisc = false;
@@ -165,7 +171,7 @@ $(function() {
         $("#undo").attr("disabled", false);
     });
 
-    $("#undo").click(function() {
+    $("#undo").click(function () {
         switch (inputs[inputs.length - 1]) {
             case "turnover":
                 undoTurnover();
@@ -185,6 +191,10 @@ $(function() {
             $("#undo").attr("disabled", true);
         }
     });
+
+    window.onbeforeunload = function () {
+        return 'Are you sure you want to leave?';
+    };
 
     function changeTeamColour(team1hasdisc) {
         if (team1hasdisc) {
