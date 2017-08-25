@@ -167,6 +167,7 @@ $(function () {
         $("#team2name").html(t1);
         $(".team1").html(t2);
         $(".team2").html(t1);
+        updateTableHeader($("#team1name").html(), $("#team2name").html());
         saveData();
     });
 
