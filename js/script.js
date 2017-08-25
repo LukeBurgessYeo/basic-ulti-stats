@@ -316,7 +316,7 @@ $(function () {
     });
 
     $("#clear").click(function () {
-        var t = confirm("Are you sure you want to clear all data?\n This cannot be undone.");
+        var t = confirm("Are you sure you want to clear all data?\nThis cannot be undone.");
         if (t) {
             localStorage.clear();
             resetData();
