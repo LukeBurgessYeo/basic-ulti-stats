@@ -7,7 +7,8 @@ $(function () {
     var team2Turns = 0;
     var team1Goals = 0;
     var team2Goals = 0;
-    var tableData = ["<table id='data' class='table table-bordered table-condensed'><tr><th colspan='2' class='team1'>Offense Team Name</th><th class='notop'></th><th colspan='2' class='team2'>Defense Team Name</th></tr><tr><th>Turns</th><th>O/D</th><th>Score</th><th>O/D</th><th>Turns</th></tr></table>"];
+    var tableData = [];
+    updateTableHeader($("#team1name").html(), $("#team2name").html());
     var inputs = [];
     var scoretable = [];
 
@@ -60,7 +61,17 @@ $(function () {
         updateTableHeader($("#team1name").html(), $("#team2name").html());
     });
 
+    $("#switch").click(function () {
+        t1 = $("#team1name").html();
+        t2 = $("#team2name").html();
+        $("#team1name").html(t2);
+        $("#team2name").html(t1);
+        $(".team1").html(t2);
+        $(".team2").html(t1);
+    });
+
     $("#turnover").click(function () {
+        $("#switch").attr("disabled", true);
         if (team1HasDisc) {
             team1Turns += 1;
             changeTeamColour(false);
@@ -77,6 +88,7 @@ $(function () {
     });
 
     $("#score").click(function () {
+        $("#switch").attr("disabled", true);
         var team1scored;
         var team1Side;
         var team2Side;
@@ -189,12 +201,13 @@ $(function () {
         inputs.pop();
         if (inputs.length === 0) {
             $("#undo").attr("disabled", true);
+            $("#switch").attr("disabled", false);
         }
     });
 
-    window.onbeforeunload = function () {
-        return 'Are you sure you want to leave?';
-    };
+    // window.onbeforeunload = function () {
+    //     return 'Are you sure you want to leave?';
+    // };
 
     function changeTeamColour(team1hasdisc) {
         if (team1hasdisc) {

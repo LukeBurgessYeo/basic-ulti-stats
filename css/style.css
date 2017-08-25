@@ -22,7 +22,9 @@ body {
     #turnover,
     #score,
     #halftime,
-    #undo {
+    #undo,
+    #save,
+    #switch {
         display: none !important;
     }
 }
@@ -49,6 +51,10 @@ body {
 .btn {
     width: 200px;
     margin: 5px 0px 5px 0px;
+}
+
+#switch {
+    width: 100px;
 }
 
 #rawData div,
