@@ -1,16 +1,23 @@
 $(function () {
-    var firstHalf = true;
-    var team1Offense = true;
-    var team1HasDisc = true;
-    var team1ScoredLast = [];
-    var team1Turns = 0;
-    var team2Turns = 0;
-    var team1Goals = 0;
-    var team2Goals = 0;
-    var tableData = [];
+    restoreUI();
+
+    var firstHalf = (localStorage.firstHalf != undefined) ? ((localStorage.firstHalf == "true") ? true : false) : true;
+    var team1Offense = (localStorage.team1Offense != undefined) ? ((localStorage.team1Offense == "true") ? true : false) : true;
+    var team1HasDisc = (localStorage.team1HasDisc != undefined) ? ((localStorage.team1HasDisc == "true") ? true : false) : true;
+    var team1ScoredLast = (localStorage.team1ScoredLast != undefined) ? JSON.parse(localStorage.team1ScoredLast) : [];
+    var team1Turns = (localStorage.team1Turns != undefined) ? JSON.parse(localStorage.team1Turns) : 0;
+    var team2Turns = (localStorage.team2Turns != undefined) ? JSON.parse(localStorage.team2Turns) : 0;
+    var team1Goals = (localStorage.team1Goals != undefined) ? JSON.parse(localStorage.team1Goals) : 0;
+    var team2Goals = (localStorage.team2Goals != undefined) ? JSON.parse(localStorage.team2Goals) : 0;
+    var tableData = (localStorage.tableData != undefined) ? JSON.parse(localStorage.tableData) : [];
     updateTableHeader($("#team1name").html(), $("#team2name").html());
-    var inputs = [];
-    var scoretable = [];
+    var inputs = (localStorage.inputs != undefined) ? JSON.parse(localStorage.inputs) : [];
+    var scoretable = (localStorage.scoretable != undefined) ? JSON.parse(localStorage.scoretable) : [];
+
+    var team1Results = (localStorage.team1Results != undefined) ? JSON.parse(localStorage.team1Results) : new Results();
+    var team2Results = (localStorage.team2Results != undefined) ? JSON.parse(localStorage.team2Results) : new Results();
+
+    restoreData();
 
     function ScoreEntry(_Team1Turns, _Team1Side, _Team1Score, _Team2Turns, _Team2Side, _Team2Score, _Team1Scored) {
         this.Team1Turns = _Team1Turns;
@@ -38,26 +45,118 @@ $(function () {
         this.DefensiveSuccessRate = 0;
     }
 
+    function saveData() {
+        localStorage.firstHalf = firstHalf.toString();
+        localStorage.team1Offense = team1Offense.toString();
+        localStorage.team1HasDisc = team1HasDisc.toString();
+        localStorage.team1ScoredLast = JSON.stringify(team1ScoredLast);
+        localStorage.team1Turns = team1Turns;
+        localStorage.team2Turns = team2Turns;
+        localStorage.team1Goals = team1Goals;
+        localStorage.team2Goals = team2Goals;
+        localStorage.tableData = JSON.stringify(tableData);
+        localStorage.inputs = JSON.stringify(inputs);
+        localStorage.scoretable = JSON.stringify(scoretable);
+        localStorage.team1Results = JSON.stringify(team1Results);
+        localStorage.team2Results = JSON.stringify(team2Results);
+        localStorage.tournamentTitle = $("#tournamentTitle").html();
+        localStorage.gameTitle = $("#gameTitle").html();
+        localStorage.team1name = $("#team1name").html();
+        localStorage.team2name = $("#team2name").html();
+    }
+
+    function restoreUI() {
+        if (localStorage.tournamentTitle != undefined) { $("#tournamentTitle").html(localStorage.tournamentTitle) };
+        if (localStorage.gameTitle != undefined) { $("#gameTitle").html(localStorage.gameTitle) };
+        if (localStorage.team1name != undefined) { $("#team1name").html(localStorage.team1name) };
+        if (localStorage.team2name != undefined) { $("#team2name").html(localStorage.team2name) };
+        $(".team1").html($("#team1name").html());
+        $(".team2").html($("#team2name").html());
+    }
+
+    function resetUI() {
+        $("#tournamentTitle").html("Tournament");
+        $("#gameTitle").html("Game Title");
+        $("#team1name").html("Team 1");
+        $("#team2name").html("Team 2");
+        $(".team1").html($("#team1name").html());
+        $(".team2").html($("#team2name").html());
+        updateTitle();
+    }
+
+    function restoreData() {
+        changeTeamColour(team1HasDisc);
+        if (team1Offense) {
+            $("#team1mode").html("Offense");
+            $("#team2mode").html("Defense");
+        } else {
+            $("#team1mode").html("Defense");
+            $("#team2mode").html("Offense");
+        }
+        $("#team1score").html(team1Goals);
+        $("#team2score").html(team2Goals);
+        $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
+        $("#data").html(tableData.join(""));
+        updateTable();
+        if (inputs.length > 0) {
+            $("#undo").attr("disabled", false);
+            $("#switch").attr("disabled", true);
+        } else {
+            $("#undo").attr("disabled", true);
+            $("#switch").attr("disabled", false);
+        }
+        (firstHalf && inputs.length > 0 && inputs[inputs.length - 1] != "turnover") ? $("#halftime").attr("disabled", false) : $("#halftime").attr("disabled", true);
+    }
+
+    function resetData() {
+        firstHalf = true;
+        team1Offense = true;
+        team1HasDisc = true;
+        team1ScoredLast = [];
+        team1Turns = 0;
+        team2Turns = 0;
+        team1Goals = 0;
+        team2Goals = 0;
+        leData = [];
+        updateTableHeader($("#team1name").html(), $("#team2name").html());
+        inputs = [];
+        scoretable = [];
+
+        team1Results = new Results();
+        team2Results = new Results();
+
+        restoreData();
+    }
+
     function updateTableHeader(team1, team2) {
         tableData[0] = "<table id='data' class='table table-bordered table-condensed'><tr><th colspan='2' class='team1'>" + team1 + "</th><th class='notop'></th><th colspan='2' class='team2'>" + team2 + "</th></tr><tr><th>Turns</th><th>O/D</th><th>Score</th><th>O/D</th><th>Turns</th></tr></table>";
     }
 
-    var team1Results = new Results();
-    var team2Results = new Results();
+    function updateTitle() {
+        $("#title").html($("#tournamentTitle").html() + ": " + $("#gameTitle").html() + "- " + $("#team1name").html() + " vs " + $("#team2name").html());
+    }
+
+    $("#tournamentTitle").blur(function () {
+        saveData();
+        updateTitle();
+    });
 
     $("#gameTitle").blur(function () {
-        $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
+        saveData();
+        updateTitle();
     });
 
     $("#team1name").blur(function () {
         $(".team1").html($("#team1name").html());
-        $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
+        saveData();
+        updateTitle();
         updateTableHeader($("#team1name").html(), $("#team2name").html());
     });
 
     $("#team2name").blur(function () {
         $(".team2").html($("#team2name").html());
-        $("#title").html($("#gameTitle").html() + ": " + $("#team1name").html() + " vs " + $("#team2name").html());
+        saveData();
+        updateTitle();
         updateTableHeader($("#team1name").html(), $("#team2name").html());
     });
 
@@ -68,6 +167,7 @@ $(function () {
         $("#team2name").html(t1);
         $(".team1").html(t2);
         $(".team2").html(t1);
+        saveData();
     });
 
     $("#turnover").click(function () {
@@ -85,6 +185,7 @@ $(function () {
         inputs.push("turnover");
         $("#halftime").attr("disabled", true);
         $("#undo").attr("disabled", false);
+        saveData();
     });
 
     $("#score").click(function () {
@@ -163,6 +264,7 @@ $(function () {
         updateTable();
         inputs.push("score");
         $("#undo").attr("disabled", false);
+        saveData();
     });
 
     $("#halftime").click(function () {
@@ -181,6 +283,7 @@ $(function () {
 
         inputs.push("half");
         $("#undo").attr("disabled", false);
+        saveData();
     });
 
     $("#undo").click(function () {
@@ -203,11 +306,22 @@ $(function () {
             $("#undo").attr("disabled", true);
             $("#switch").attr("disabled", false);
         }
+        saveData();
     });
 
-    // window.onbeforeunload = function () {
-    //     return 'Are you sure you want to leave?';
-    // };
+    $("#save").click(function () {
+        var t = confirm("Save game data to Dropbox?");
+        if (t) { console.log("saved") };
+    });
+
+    $("#clear").click(function () {
+        var t = confirm("Are you sure you want to clear all data?\n This cannot be undone.");
+        if (t) {
+            localStorage.clear();
+            resetData();
+            resetUI();
+        };
+    });
 
     function changeTeamColour(team1hasdisc) {
         if (team1hasdisc) {
@@ -226,6 +340,7 @@ $(function () {
     }
 
     function undoTurnover() {
+        console.log(team1HasDisc);
         team1HasDisc ? (team2Turns -= 1) : (team1Turns -= 1);
         team1HasDisc = !team1HasDisc;
         $("#turnover").html(team1Turns + " Turnovers " + team2Turns);
