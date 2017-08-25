@@ -117,7 +117,7 @@ $(function () {
         team2Turns = 0;
         team1Goals = 0;
         team2Goals = 0;
-        leData = [];
+        tableData = [];
         updateTableHeader($("#team1name").html(), $("#team2name").html());
         inputs = [];
         scoretable = [];
