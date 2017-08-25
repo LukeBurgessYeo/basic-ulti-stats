@@ -53,7 +53,9 @@ body {
     margin: 5px 0px 5px 0px;
 }
 
-#switch {
+#switch,
+#save,
+#clear {
     width: 100px;
 }
 
