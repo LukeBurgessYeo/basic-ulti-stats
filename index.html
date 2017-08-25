@@ -24,7 +24,11 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-primary text-center" id="gameTitle" contentEditable>Click Title And Team Names To Edit</h1>
+    <div class="text-center">
+        <h2 class="text-primary" id="tournamentTitle" contentEditable>Tournament</h2>
+        <h1 class="text-primary" id="gameTitle" contentEditable>Game Title</h1>
+        <button class="btn btn-sm btn-info" id="switch">Switch Sides</button>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-5 text-right offense">
@@ -39,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-xs-5 text-right offense">
-                <h4 id="team1name" style="color: yellow;" contentEditable>Offense Team Name</h4>
+                <h4 id="team1name" style="color: yellow;" contentEditable>Team 1</h4>
             </div>
             <div class="col-xs-1 text-center">
                 <h4 id="team1score">0</h4>
@@ -48,7 +52,7 @@
                 <h4 id="team2score">0</h4>
             </div>
             <div class="col-xs-5 text-left defense">
-                <h4 id="team2name" contentEditable>Defense Team Name</h4>
+                <h4 id="team2name" contentEditable>Team 2</h4>
             </div>
         </div>
         <br>
@@ -65,10 +69,10 @@
                 <div class="row text-center" id="rawData">
                     <table id='data' class='table table-bordered table-condensed'>
                         <tr>
-                            <th colspan="2" class="team1">Offense Team Name</th>
+                            <th colspan="2" class="team1">Team 1</th>
                             <th class="notop">
                             </th>
-                            <th colspan="2" class="team2">Defense Team Name</th>
+                            <th colspan="2" class="team2">Team 2</th>
                         </tr>
                         <tr>
                             <th>Turns</th>
@@ -85,10 +89,10 @@
                 <div class="row text-center" id="computedData">
                     <table class="table table-bordered table-condensed">
                         <tr>
-                            <th colspan="2" class="team1">Offense Team Name</th>
+                            <th colspan="2" class="team1">Team 1</th>
                             <th class="notop">
                             </th>
-                            <th colspan="2" class="team2">Defense Team Name</th>
+                            <th colspan="2" class="team2">Team 2</th>
                         </tr>
                         <tr>
                             <th>O</th>
@@ -195,6 +199,8 @@
         </div>
         <div class="text-center">
             <button class="btn btn-sm btn-info" disabled="true" id="save">Save As XML</button>
+            <br />
+            <br />
         </div>
     </div>
 </body>
