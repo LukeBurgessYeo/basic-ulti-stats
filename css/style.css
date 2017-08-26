@@ -24,7 +24,8 @@ body {
     #halftime,
     #undo,
     #save,
-    #switch {
+    #switch,
+    #clear {
         display: none !important;
     }
 }
