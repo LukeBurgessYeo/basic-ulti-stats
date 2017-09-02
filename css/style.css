@@ -16,16 +16,14 @@ body {
         width: 40% !important;
         text-align: left !important;
     }
+
+    #title>th {
+      font-size: 12px;
+    }
 }
 
 @media print {
-    #turnover,
-    #score,
-    #halftime,
-    #undo,
-    #save,
-    #switch,
-    #clear {
+    button {
         display: none !important;
     }
 }
@@ -50,8 +48,18 @@ body {
 }
 
 .btn {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
     margin: 5px 0px 5px 0px;
+}
+
+#halftime,
+#undo {
+  width: 98px;
+}
+
+#halftime {
+  margin-right: 4px;
 }
 
 #switch,
@@ -75,6 +83,10 @@ th {
     text-align: center;
 }
 
+#data td {
+  word-break: break-all;
+}
+
 .hold {
   background-color: #66af56;
 }
@@ -93,6 +105,7 @@ th {
 
 .perfect {
   font-weight: bolder;
+  color: yellow;
 }
 
 .half {
