@@ -42,11 +42,11 @@ $(function() {
     this.NoTurnGoals = [0, 0];
     this.GoalsWithTurns = [0, 0];
     this.HadDiscPoints = [0, 0];
-    this.ConversionRate = [0, 0];
-    this.PerfectConversionRate = [0, 0];
+    this.ConversionRate = ["0/0", "0/0"];
+    this.PerfectConversionRate = ["0/0", "0/0"];
     this.MeanTurnsPerPoint = [0, 0];
-    this.RecoveryRate = [0, 0];
-    this.DefensiveSuccessRate = 0;
+    this.RecoveryRate = ["0/0", "0/0"];
+    this.DefensiveSuccessRate = "0/0";
   }
 
   function saveData() {
@@ -515,28 +515,28 @@ $(function() {
     $("#hdO2").html(team2Results.HadDiscPoints[0]);
     $("#hdD2").html(team2Results.HadDiscPoints[1]);
 
-    $("#crO1").html(team1Results.ConversionRate[0] + "%");
-    $("#crD1").html(team1Results.ConversionRate[1] + "%");
-    $("#crO2").html(team2Results.ConversionRate[0] + "%");
-    $("#crD2").html(team2Results.ConversionRate[1] + "%");
+    $("#crO1").html(team1Results.ConversionRate[0]);
+    $("#crD1").html(team1Results.ConversionRate[1]);
+    $("#crO2").html(team2Results.ConversionRate[0]);
+    $("#crD2").html(team2Results.ConversionRate[1]);
 
-    $("#pcO1").html(team1Results.PerfectConversionRate[0] + "%");
-    $("#pcD1").html(team1Results.PerfectConversionRate[1] + "%");
-    $("#pcO2").html(team2Results.PerfectConversionRate[0] + "%");
-    $("#pcD2").html(team2Results.PerfectConversionRate[1] + "%");
+    $("#pcO1").html(team1Results.PerfectConversionRate[0]);
+    $("#pcD1").html(team1Results.PerfectConversionRate[1]);
+    $("#pcO2").html(team2Results.PerfectConversionRate[0]);
+    $("#pcD2").html(team2Results.PerfectConversionRate[1]);
 
     $("#mtO1").html(team1Results.MeanTurnsPerPoint[0]);
     $("#mtD1").html(team1Results.MeanTurnsPerPoint[1]);
     $("#mtO2").html(team2Results.MeanTurnsPerPoint[0]);
     $("#mtD2").html(team2Results.MeanTurnsPerPoint[1]);
 
-    $("#rrO1").html(team1Results.RecoveryRate[0] + "%");
-    $("#rrD1").html(team1Results.RecoveryRate[1] + "%");
-    $("#rrO2").html(team2Results.RecoveryRate[0] + "%");
-    $("#rrD2").html(team2Results.RecoveryRate[1] + "%");
+    $("#rrO1").html(team1Results.RecoveryRate[0]);
+    $("#rrD1").html(team1Results.RecoveryRate[1]);
+    $("#rrO2").html(team2Results.RecoveryRate[0]);
+    $("#rrD2").html(team2Results.RecoveryRate[1]);
 
-    $("#ds1").html(team1Results.DefensiveSuccessRate + "%");
-    $("#ds2").html(team2Results.DefensiveSuccessRate + "%");
+    $("#ds1").html(team1Results.DefensiveSuccessRate);
+    $("#ds2").html(team2Results.DefensiveSuccessRate);
   }
 
   function computeResults() {
@@ -597,29 +597,29 @@ $(function() {
     team2Results.HadDiscPoints[0] = team2Results.PointsPlayed[0];
 
     if (team1Results.HadDiscPoints[0] > 0) {
-      team1Results.ConversionRate[0] = Math.round(100 * team1Results.GoalsScored[0] / team1Results.HadDiscPoints[0]);
+      team1Results.ConversionRate[0] = team1Results.GoalsScored[0] + "/" + team1Results.HadDiscPoints[0];
     }
     if (team1Results.HadDiscPoints[1] > 0) {
-      team1Results.ConversionRate[1] = Math.round(100 * team1Results.GoalsScored[1] / team1Results.HadDiscPoints[1]);
+      team1Results.ConversionRate[1] = team1Results.GoalsScored[1] + "/" + team1Results.HadDiscPoints[1];
     }
     if (team2Results.HadDiscPoints[0] > 0) {
-      team2Results.ConversionRate[0] = Math.round(100 * team2Results.GoalsScored[0] / team2Results.HadDiscPoints[0]);
+      team2Results.ConversionRate[0] = team2Results.GoalsScored[0] + "/" + team2Results.HadDiscPoints[0];
     }
     if (team2Results.HadDiscPoints[1] > 0) {
-      team2Results.ConversionRate[1] = Math.round(100 * team2Results.GoalsScored[1] / team2Results.HadDiscPoints[1]);
+      team2Results.ConversionRate[1] = team2Results.GoalsScored[1] + "/" + team2Results.HadDiscPoints[1];
     }
 
     if (team1Results.HadDiscPoints[0] > 0) {
-      team1Results.PerfectConversionRate[0] = Math.round(100 * team1Results.NoTurnGoals[0] / team1Results.HadDiscPoints[0]);
+      team1Results.PerfectConversionRate[0] = team1Results.NoTurnGoals[0] + "/" + team1Results.HadDiscPoints[0];
     }
     if (team1Results.HadDiscPoints[1] > 0) {
-      team1Results.PerfectConversionRate[1] = Math.round(100 * team1Results.NoTurnGoals[1] / team1Results.HadDiscPoints[1]);
+      team1Results.PerfectConversionRate[1] = team1Results.NoTurnGoals[1] + "/" + team1Results.HadDiscPoints[1];
     }
     if (team2Results.HadDiscPoints[0] > 0) {
-      team2Results.PerfectConversionRate[0] = Math.round(100 * team2Results.NoTurnGoals[0] / team2Results.HadDiscPoints[0]);
+      team2Results.PerfectConversionRate[0] = team2Results.NoTurnGoals[0] + "/" + team2Results.HadDiscPoints[0];
     }
     if (team2Results.HadDiscPoints[1] > 0) {
-      team2Results.PerfectConversionRate[1] = Math.round(100 * team2Results.NoTurnGoals[1] / team2Results.HadDiscPoints[1]);
+      team2Results.PerfectConversionRate[1] = team2Results.NoTurnGoals[1] + "/" + team2Results.HadDiscPoints[1];
     }
 
     if (team1Results.HadDiscPoints[0] > 0) {
@@ -636,23 +636,23 @@ $(function() {
     }
 
     if (team1Results.HadDiscPoints[0] - team1Results.NoTurnGoals[0] > 0) {
-      team1Results.RecoveryRate[0] = Math.round(100 * team1Results.GoalsWithTurns[0] / (team1Results.HadDiscPoints[0] - team1Results.NoTurnGoals[0]));
+      team1Results.RecoveryRate[0] = team1Results.GoalsWithTurns[0] + "/" + (team1Results.HadDiscPoints[0] - team1Results.NoTurnGoals[0]);
     }
     if (team1Results.HadDiscPoints[1] - team1Results.NoTurnGoals[1] > 0) {
-      team1Results.RecoveryRate[1] = Math.round(100 * team1Results.GoalsWithTurns[1] / (team1Results.HadDiscPoints[1] - team1Results.NoTurnGoals[1]));
+      team1Results.RecoveryRate[1] = team1Results.GoalsWithTurns[1] + "/" + (team1Results.HadDiscPoints[1] - team1Results.NoTurnGoals[1]);
     }
     if (team2Results.HadDiscPoints[0] - team2Results.NoTurnGoals[0] > 0) {
-      team2Results.RecoveryRate[0] = Math.round(100 * team2Results.GoalsWithTurns[0] / (team2Results.HadDiscPoints[0] - team2Results.NoTurnGoals[0]));
+      team2Results.RecoveryRate[0] = team2Results.GoalsWithTurns[0] + "/" + (team2Results.HadDiscPoints[0] - team2Results.NoTurnGoals[0]);
     }
     if (team2Results.HadDiscPoints[1] - team2Results.NoTurnGoals[1] > 0) {
-      team2Results.RecoveryRate[1] = Math.round(100 * team2Results.GoalsWithTurns[1] / (team2Results.HadDiscPoints[1] - team2Results.NoTurnGoals[1]));
+      team2Results.RecoveryRate[1] = team2Results.GoalsWithTurns[1] + "/" + (team2Results.HadDiscPoints[1] - team2Results.NoTurnGoals[1]);
     }
 
     if (team1Results.PointsPlayed[1] > 0) {
-      team1Results.DefensiveSuccessRate = Math.round(100 * team1Results.HadDiscPoints[1] / team1Results.PointsPlayed[1]);
+      team1Results.DefensiveSuccessRate = team1Results.HadDiscPoints[1] + "/" + team1Results.PointsPlayed[1];
     }
     if (team2Results.PointsPlayed[1] > 0) {
-      team2Results.DefensiveSuccessRate = Math.round(100 * team2Results.HadDiscPoints[1] / team2Results.PointsPlayed[1]);
+      team2Results.DefensiveSuccessRate = team2Results.HadDiscPoints[1] + "/" + team2Results.PointsPlayed[1]
     }
 
   }
