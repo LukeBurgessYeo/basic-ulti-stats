@@ -2,226 +2,210 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title id="title">Basic Ultimate Stats</title>
+  <title id="title">Basic Ultimate Stats</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="https://github.com/LukeBurgessYeo/basic-ulti-stats/tree/gh-pages">Basic Ultimate Stats Tracking</a>
-            </div>
-        </div>
-    </nav>
-    <div class="text-center">
-        <h2 class="text-primary" id="tournamentTitle" contentEditable>Tournament</h2>
-        <h1 class="text-primary" id="gameTitle" contentEditable>Game Title</h1>
-        <button class="btn btn-sm btn-info" id="switch">Switch Sides</button>
-    </div>
+  <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-5 text-right offense">
-                <h5 id="team1mode">Offense</h5>
-            </div>
-            <div class="col-xs-2 text-center">
-                <h5>Score</h5>
-            </div>
-            <div class="col-xs-5 text-left defense">
-                <h5 id="team2mode">Defense</h5>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-5 text-right offense">
-                <h4 id="team1name" style="color: yellow;" contentEditable>Team 1</h4>
-            </div>
-            <div class="col-xs-1 text-center">
-                <h4 id="team1score">0</h4>
-            </div>
-            <div class="col-xs-1 text-center">
-                <h4 id="team2score">0</h4>
-            </div>
-            <div class="col-xs-5 text-left defense">
-                <h4 id="team2name" contentEditable>Team 2</h4>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="col-xs-12 col-md-6 text-center">
-              <button class="btn btn-lg btn-info" id="pass">Pass</button>
-            </div>
-            <div class="col-xs-12 col-md-6 text-center">
-              <button class="btn btn-lg btn-danger" id="turnover">Turnover</button>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="col-xs-12 col-md-6 text-center">
-              <button class="btn btn-lg btn-success" id="score">Score</button>
-            </div>
-            <div class="col-xs-12 col-md-6 text-center">
-              <button class="btn btn-lg btn-primary" disabled="true" id="halftime">Halftime</button>
-              <button class="btn btn-lg btn-warning" disabled="true" id="undo">Undo</button>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="row text-center" id="rawData">
-                    <table id='data' class='table table-bordered table-condensed'>
-                        <tr>
-                            <th colspan="3" class="team1">Team 1</th>
-                            <th class="notop">
-                            </th>
-                            <th colspan="3" class="team2">Team 2</th>
-                        </tr>
-                        <tr id="title">
-                            <th>Passes</th>
-                            <th>Turns</th>
-                            <th>O/D</th>
-                            <th>Score</th>
-                            <th>O/D</th>
-                            <th>Turns</th>
-                            <th>Passes</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="row text-center" id="computedData">
-                    <table class="table table-bordered table-condensed">
-                        <tr>
-                            <th colspan="2" class="team1">Team 1</th>
-                            <th class="notop">
-                            </th>
-                            <th colspan="2" class="team2">Team 2</th>
-                        </tr>
-                        <tr>
-                            <th>O</th>
-                            <th>D</th>
-                            <th></th>
-                            <th>O</th>
-                            <th>D</th>
-                        </tr>
-                        <tr>
-                            <td id="ppO1">0</td>
-                            <td id="ppD1">0</td>
-                            <td>Points Played</td>
-                            <td id="ppO2">0</td>
-                            <td id="ppD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="gsO1">0</td>
-                            <td id="gsD1">0</td>
-                            <td>Goals Scored</td>
-                            <td id="gsO2">0</td>
-                            <td id="gsD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="toO1">0</td>
-                            <td id="toD1">0</td>
-                            <td>Turnovers</td>
-                            <td id="toO2">0</td>
-                            <td id="toD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="blO1">0</td>
-                            <td id="blD1">0</td>
-                            <td>Blocks</td>
-                            <td id="blO2">0</td>
-                            <td id="blD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="brO1">-0</td>
-                            <td id="brD1">0</td>
-                            <td>Breaks</td>
-                            <td id="brO2">-0</td>
-                            <td id="brD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="ntO1">0</td>
-                            <td id="ntD1">0</td>
-                            <td>No Turn Goals</td>
-                            <td id="ntO2">0</td>
-                            <td id="ntD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="gtO1">0</td>
-                            <td id="gtD1">0</td>
-                            <td>Goals With Turns</td>
-                            <td id="gtO2">0</td>
-                            <td id="gtD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="hdO1">0</td>
-                            <td id="hdD1">0</td>
-                            <td>Had Disc Points</td>
-                            <td id="hdO2">0</td>
-                            <td id="hdD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="crO1">0/0</td>
-                            <td id="crD1">0/0</td>
-                            <td>Conversions</td>
-                            <td id="crO2">0/0</td>
-                            <td id="crD2">0/0</td>
-                        </tr>
-                        <tr>
-                            <td id="pcO1">0/0</td>
-                            <td id="pcD1">0/0</td>
-                            <td>Perfect Conversions</td>
-                            <td id="pcO2">0/0</td>
-                            <td id="pcD2">0/0</td>
-                        </tr>
-                        <tr>
-                            <td id="mtO1">0</td>
-                            <td id="mtD1">0</td>
-                            <td>Mean Turns Per Point</td>
-                            <td id="mtO2">0</td>
-                            <td id="mtD2">0</td>
-                        </tr>
-                        <tr>
-                            <td id="rrO1">0/0</td>
-                            <td id="rrD1">0/0</td>
-                            <td>Recovered Points</td>
-                            <td id="rrO2">0/0</td>
-                            <td id="rrD2">0/0</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td id="ds1">0/0</td>
-                            <td>Defensive Successes</td>
-                            <td></td>
-                            <td id="ds2">0/0</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-        <div class="row text-center">
-            <div class="col-xs-12 col-sm-6 text-center">
-                <button class="btn btn-sm btn-danger" id="clear">Clear Data</button>
-            </div>
-            <div class="col-xs-12 col-sm-6 text-center">
-                <button class="btn btn-sm btn-info" disabled="true" id="save">Save Game</button>
-            </div>
-        </div>
-        <br />
+      <div class="navbar-header">
+        <a class="navbar-brand" href="https://github.com/LukeBurgessYeo/basic-ulti-stats/tree/gh-pages">Basic Ultimate Stats Tracking</a>
+      </div>
     </div>
+  </nav>
+  <div class="text-center">
+    <h2 class="text-primary" id="tournamentTitle" contentEditable>Tournament</h2>
+    <h1 class="text-primary" id="gameTitle" contentEditable>Game Title</h1>
+    <button class="btn btn-sm btn-info" id="switch">Switch Sides</button>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-5 text-right offense">
+        <h5 id="team1mode">Offense</h5>
+      </div>
+      <div class="col-xs-2 text-center">
+        <h5>Score</h5>
+      </div>
+      <div class="col-xs-5 text-left defense">
+        <h5 id="team2mode">Defense</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-5 text-right offense">
+        <h4 id="team1name" style="color: yellow;" contentEditable>Team 1</h4>
+      </div>
+      <div class="col-xs-1 text-center">
+        <h4 id="team1score">0</h4>
+      </div>
+      <div class="col-xs-1 text-center">
+        <h4 id="team2score">0</h4>
+      </div>
+      <div class="col-xs-5 text-left defense">
+        <h4 id="team2name" contentEditable>Team 2</h4>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="col-xs-12 col-md-6 text-center">
+          <button class="btn btn-lg btn-info" id="pass">Pass</button>
+        </div>
+        <div class="col-xs-12 col-md-6 text-center">
+          <button class="btn btn-lg btn-danger" id="turnover">Turnover</button>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="col-xs-12 col-md-6 text-center">
+          <button class="btn btn-lg btn-success" id="score">Score</button>
+        </div>
+        <div class="col-xs-12 col-md-6 text-center">
+          <button class="btn btn-lg btn-primary" disabled="true" id="halftime">Halftime</button>
+          <button class="btn btn-lg btn-warning" disabled="true" id="undo">Undo</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="row text-center" id="rawData">
+          <table id='data' class='table table-bordered table-condensed'>
+            <tr>
+              <th colspan="3" class="team1">Team 1</th>
+              <th class="notop">
+              </th>
+              <th colspan="3" class="team2">Team 2</th>
+            </tr>
+            <tr id="title">
+              <th>Passes</th>
+              <th>Turns</th>
+              <th>O/D</th>
+              <th>Score</th>
+              <th>O/D</th>
+              <th>Turns</th>
+              <th>Passes</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="row text-center" id="computedData">
+          <table class="table table-bordered table-condensed">
+            <tr>
+              <th colspan="2" class="team1">Team 1</th>
+              <th class="notop">
+              </th>
+              <th colspan="2" class="team2">Team 2</th>
+            </tr>
+            <tr>
+              <th>O</th>
+              <th>D</th>
+              <th></th>
+              <th>O</th>
+              <th>D</th>
+            </tr>
+            <tr>
+              <td id="crO1">0/0</td>
+              <td id="crD1">0/0</td>
+              <td><span data-toggle="tooltip" title="Points scored / points played.">Conversions</span></td>
+              <td id="crO2">0/0</td>
+              <td id="crD2">0/0</td>
+            </tr>
+            <tr>
+              <td id="pcO1">0/0</td>
+              <td id="pcD1">0/0</td>
+              <td><span data-toggle="tooltip" title="Points scored with 0 turnovers / points played.">Perfect Conversions</span></td>
+              <td id="pcO2">0/0</td>
+              <td id="pcD2">0/0</td>
+            </tr>
+            <tr>
+              <td id="toO1">0</td>
+              <td id="toD1">0</td>
+              <td>Turnovers</td>
+              <td id="toO2">0</td>
+              <td id="toD2">0</td>
+            </tr>
+            <tr>
+              <td id="blO1">0</td>
+              <td id="blD1">0</td>
+              <td><span data-toggle="tooltip" title="Equal to opposing team's turnovers.">Blocks</span></td>
+              <td id="blO2">0</td>
+              <td id="blD2">0</td>
+            </tr>
+            <tr>
+              <td id="brO1">-0</td>
+              <td id="brD1">0</td>
+              <td><span data-toggle="tooltip" title="For O: number of points not scored. <br/>For D: number of points scored.">Breaks</span></td>
+              <td id="brO2">-0</td>
+              <td id="brD2">0</td>
+            </tr>
+            <tr>
+              <td id="mtO1">0</td>
+              <td id="mtD1">0</td>
+              <td><span data-toggle="tooltip" title="Total turnovers divided by points played.">Turnovers Per Point</span></td>
+              <td id="mtO2">0</td>
+              <td id="mtD2">0</td>
+            </tr>
+            <tr>
+              <td id="rrO1">0/0</td>
+              <td id="rrD1">0/0</td>
+              <td><span data-toggle="tooltip" title="(AKA 'Imperfect Conversions') <br/>Points scored with at least 1 turnover / points with at least 1 turnover.">Recovered Points</span></td>
+              <td id="rrO2">0/0</td>
+              <td id="rrD2">0/0</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td id="ds1">0/0</td>
+              <td><span data-toggle="tooltip" title="Points with at least 1 block / points played.">Successful D Points</span></td>
+              <td></td>
+              <td id="ds2">0/0</td>
+            </tr>
+            <tr>
+              <td colspan="2"></td>
+              <td></td>
+              <td colspan="2"></td>
+            </tr>
+            <tr>
+              <td id="tpO1">0/0</td>
+              <td id="tpD1">0/0</td>
+              <td>Total Passes</td>
+              <td id="tpO2">0/0</td>
+              <td id="tpD2">0/0</td>
+            </tr>
+            <tr>
+              <td id="mppO1">0</td>
+              <td id="mppD1">0</td>
+              <td><span data-toggle="tooltip" title="Total passes divided by points played.">Passes Per Point</span></td>
+              <td id="mppO2">0</td>
+              <td id="mppD2">0</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="row text-center">
+      <div class="col-xs-12 col-sm-6 text-center">
+        <button class="btn btn-sm btn-danger" id="clear">Clear Data</button>
+      </div>
+      <div class="col-xs-12 col-sm-6 text-center">
+        <button class="btn btn-sm btn-info" disabled="true" id="save">Save Game</button>
+      </div>
+    </div>
+    <br />
+  </div>
 </body>
 
 </html>
