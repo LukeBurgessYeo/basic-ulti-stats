@@ -86,6 +86,7 @@ th {
   padding: 5px;
   font-size: 14px;
   margin: 0px;
+  cursor: pointer;
 }
 
 .tooltip.in {

@@ -52,6 +52,7 @@ $(function() {
     this.RecoveryRate = ["0/0", "0/0"];
     this.DefensiveSuccessRate = "0/0";
     this.TotalPasses = [0, 0];
+    this.CompletionRate = [0, 0];
     this.MeanPassesPerPoint = [0, 0];
   }
 
@@ -524,6 +525,11 @@ $(function() {
     $("#tpO2").html(team2Results.TotalPasses[0]);
     $("#tpD2").html(team2Results.TotalPasses[1]);
 
+    $("#pcrO1").html(team1Results.CompletionRate[0] + "%");
+    $("#pcrD1").html(team1Results.CompletionRate[1] + "%");
+    $("#pcrO2").html(team2Results.CompletionRate[0] + "%");
+    $("#pcrD2").html(team2Results.CompletionRate[1] + "%");
+
     $("#mppO1").html(team1Results.MeanPassesPerPoint[0]);
     $("#mppD1").html(team1Results.MeanPassesPerPoint[1]);
     $("#mppO2").html(team2Results.MeanPassesPerPoint[0]);
@@ -657,6 +663,19 @@ $(function() {
     }
     if (team2Results.PointsPlayed[0] > 0) {
       team2Results.MeanPassesPerPoint[0] = Math.round(100 * team2Results.TotalPasses[0] / team2Results.PointsPlayed[0]) / 100;
+    }
+
+    if (team1Results.TotalPasses[0] + team1Results.Turnovers[0] > 0) {
+      team1Results.CompletionRate[0] = Math.round(100 * team1Results.TotalPasses[0] / (team1Results.TotalPasses[0] + team1Results.Turnovers[0]));
+    }
+    if (team1Results.TotalPasses[1] + team1Results.Turnovers[1] > 0) {
+      team1Results.CompletionRate[1] = Math.round(100 * team1Results.TotalPasses[1] / (team1Results.TotalPasses[1] + team1Results.Turnovers[1]));
+    }
+    if (team2Results.TotalPasses[0] + team2Results.Turnovers[0] > 0) {
+      team2Results.CompletionRate[0] = Math.round(100 * team2Results.TotalPasses[0] / (team2Results.TotalPasses[0] + team2Results.Turnovers[0]));
+    }
+    if (team2Results.TotalPasses[1] + team2Results.Turnovers[1] > 0) {
+      team2Results.CompletionRate[1] = Math.round(100 * team2Results.TotalPasses[1] / (team2Results.TotalPasses[1] + team2Results.Turnovers[1]));
     }
 
   }
