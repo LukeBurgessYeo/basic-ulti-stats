@@ -82,11 +82,15 @@ th {
 .tooltip>.tooltip-inner {
   background-color: white;
   color: black;
-  border: 1px solid black;
+  border: 1px solid white;
   padding: 5px;
   font-size: 14px;
   margin: 0px;
   cursor: pointer;
+}
+
+.tooltip.top > .tooltip-arrow {
+  border-top: 5px solid white;
 }
 
 .tooltip.in {
