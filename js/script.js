@@ -54,6 +54,7 @@ $(function() {
     this.TotalPasses = [0, 0];
     this.CompletionRate = [0, 0];
     this.MeanPassesPerPoint = [0, 0];
+    this.MeanPassesPerPoss = [0, 0];
   }
 
   function saveData() {
@@ -534,6 +535,11 @@ $(function() {
     $("#mppD1").html(team1Results.MeanPassesPerPoint[1]);
     $("#mppO2").html(team2Results.MeanPassesPerPoint[0]);
     $("#mppD2").html(team2Results.MeanPassesPerPoint[1]);
+
+    $("#mpoO1").html(team1Results.MeanPassesPerPoss[0]);
+    $("#mpoD1").html(team1Results.MeanPassesPerPoss[1]);
+    $("#mpoO2").html(team2Results.MeanPassesPerPoss[0]);
+    $("#mpoD2").html(team2Results.MeanPassesPerPoss[1]);
   }
 
   function computeResults() {
@@ -656,6 +662,7 @@ $(function() {
     if (team2Results.PointsPlayed[1] > 0) {
       team2Results.DefensiveSuccessRate = team2Results.HadDiscPoints[1] + "/" + team2Results.PointsPlayed[1];
       team2Results.MeanPassesPerPoint[1] = Math.round(100 * team2Results.TotalPasses[1] / team2Results.PointsPlayed[1]) / 100;
+      team2Results.MeanPassesPerPoss[1] = Math.round(100 * team2Results.TotalPasses[1] / (team2Results.Turnovers[1] + team2Results.GoalsScored[1])) / 100;
     }
 
     if (team1Results.PointsPlayed[0] > 0) {
@@ -663,6 +670,19 @@ $(function() {
     }
     if (team2Results.PointsPlayed[0] > 0) {
       team2Results.MeanPassesPerPoint[0] = Math.round(100 * team2Results.TotalPasses[0] / team2Results.PointsPlayed[0]) / 100;
+    }
+    if (team1Results.Turnovers[1] + team1Results.GoalsScored[1] > 0) {
+      team1Results.MeanPassesPerPoss[1] = Math.round(100 * team1Results.TotalPasses[1] / (team1Results.Turnovers[1] + team1Results.GoalsScored[1])) / 100;
+    }
+    if (team2Results.Turnovers[1] + team2Results.GoalsScored[1] > 0) {
+      team2Results.MeanPassesPerPoss[1] = Math.round(100 * team2Results.TotalPasses[1] / (team2Results.Turnovers[1] + team2Results.GoalsScored[1])) / 100;
+    }
+
+    if (team1Results.PointsPlayed[0] > 0) {
+      team1Results.MeanPassesPerPoss[0] = Math.round(100 * team1Results.TotalPasses[0] / (team1Results.Turnovers[0] + team1Results.GoalsScored[0])) / 100;
+    }
+    if (team2Results.PointsPlayed[0] > 0) {
+      team2Results.MeanPassesPerPoss[0] = Math.round(100 * team2Results.TotalPasses[0] / (team2Results.Turnovers[0] + team2Results.GoalsScored[0])) / 100;
     }
 
     if (team1Results.TotalPasses[0] + team1Results.Turnovers[0] > 0) {
