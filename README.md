@@ -12,4 +12,3 @@ New Features:
 
 Features Coming Soon!
 - "Save" button to download the game data
-- More analyitcs based on pass data
